@@ -1,4 +1,5 @@
 (print (view [:inc-vargs ...]))
+(local fennel (require :fennel))
 
 ;; internally this macro-file wants to complicate a value
 
@@ -41,12 +42,17 @@
 ;        ,module))
 ; (import-macros {: complicate} (rel-path :complicate true))
 ;; has same issues as ... is ultimately nil in the require-macros context
+; (print (view fennel.searchModule))
 
-(complicate my-var :file-root)
-(print :complicate-inside-inc-macro-file (view my-var-complicated))
+; (fennel.eval (tostring (complicate `my-var :file-root)))
+; (print :complicate-inside-inc-macro-file (view my-var-complicated))
+
+(local x [...])
+; (print :call-scope (view (get-scope)))
+; (import-macros {: complicate} (.. ... :macro))
 
 (fn inc [y]
-  (print :complicate-inside-inc-macro (view (complicate :inside-inc-fn)))
+  ;(print :complicate-inside-inc-macro (view (complicate :inside-inc-fn)))
   `(+ 1 ,y))
 
 {: inc}
