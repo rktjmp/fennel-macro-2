@@ -47,9 +47,14 @@
 ; (fennel.eval (tostring (complicate `my-var :file-root)))
 ; (print :complicate-inside-inc-macro-file (view my-var-complicated))
 
-(local x [...])
 ; (print :call-scope (view (get-scope)))
 ; (import-macros {: complicate} (.. ... :macro))
+
+(import-macros {: complicate} (do
+                         (print :do-print ...)
+                         (.. (or (string.match ... "(.+%.)inc") "") :complicate)))
+(complicate my-var :complicated-in-file)
+(print :complicate-inside-inc-macro-file (view my-var-complicated))
 
 (fn inc [y]
   ;(print :complicate-inside-inc-macro (view (complicate :inside-inc-fn)))
