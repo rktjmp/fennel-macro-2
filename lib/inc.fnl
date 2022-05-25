@@ -23,11 +23,14 @@
 ;                                    (string.gsub ... "%.inc" ".")
 ;                                    ;; append desired path
 ;                                    :complicate)))
-;; ^^^ this "doesnt crash" but complicate returns quoted forms, so it's not
-;; actually usable as a macro that produces a result.
-;; once you try to use (complicate), the symbol give doesn't exist
-;; (complicate my-var :file-root)
+;; ^^^ this "doesnt crash" but we can't pass in unknown symbols to actually
+;; use the macro.
+;; We can quote the vars passed in, which gets around the sym issue, but
+;; the macro returns a quoted form, which we can it actually apply.
+; (print (complicate my-var :file-root))
 ;; ^^ "unknown identifier in strict mode: my-var"
+; (print (complicate `my-var :file-root))
+;; (list (local my-var-complicated "file-root"))
 
 ;; AY macro
 ; (macro rel-path [module from-macro?]
